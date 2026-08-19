@@ -12,5 +12,5 @@
 - [x] Menghasilkan serta menerapkan ikon aplikasi khusus Ruang Tumbuh pada konfigurasi aplikasi.
 - [x] Menambahkan pengujian penyimpanan lokal dan validasi input.
 - [x] Memeriksa TypeScript, lint, dan alur utama aplikasi.
-- [ ] Menyinkronkan kode ke repositori GitHub privat.
+- [x] Menyinkronkan kode ke repositori GitHub privat.
 - [x] Menyusun panduan pengujian perangkat, pemasangan aplikasi, dan langkah sinkronisasi ke GitHub.
