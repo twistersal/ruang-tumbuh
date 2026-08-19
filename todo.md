@@ -15,3 +15,4 @@
 - [x] Menyinkronkan kode ke repositori GitHub privat.
 - [x] Menyusun panduan pengujian perangkat, pemasangan aplikasi, dan langkah sinkronisasi ke GitHub.
 - [x] Mengganti aset ikon berukuran besar dengan ikon PNG pengguna yang lebih ringan untuk checkpoint.
+- [x] Menambahkan input dan total harian protein, karbohidrat, dan lemak pada catatan makan.
