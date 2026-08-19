@@ -1,48 +1,11 @@
-import { ScrollView, Text, View, TouchableOpacity } from "react-native";
-
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { router } from "expo-router";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Button, Card, Eyebrow, Loading } from "@/components/rt-ui";
 import { ScreenContainer } from "@/components/screen-container";
-
-/**
- * Home Screen - NativeWind Example
- *
- * This template uses NativeWind (Tailwind CSS for React Native).
- * You can use familiar Tailwind classes directly in className props.
- *
- * Key patterns:
- * - Use `className` instead of `style` for most styling
- * - Theme colors: use tokens directly (bg-background, text-foreground, bg-primary, etc.); no dark: prefix needed
- * - Responsive: standard Tailwind breakpoints work on web
- * - Custom colors defined in tailwind.config.js
- */
-export default function HomeScreen() {
-  return (
-    <ScreenContainer className="p-6">
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View className="flex-1 gap-8">
-          {/* Hero Section */}
-          <View className="items-center gap-2">
-            <Text className="text-4xl font-bold text-foreground">Welcome</Text>
-            <Text className="text-base text-muted text-center">
-              Edit app/(tabs)/index.tsx to get started
-            </Text>
-          </View>
-
-          {/* Example Card */}
-          <View className="w-full max-w-sm self-center bg-surface rounded-2xl p-6 shadow-sm border border-border">
-            <Text className="text-lg font-semibold text-foreground mb-2">NativeWind Ready</Text>
-            <Text className="text-sm text-muted leading-relaxed">
-              Use Tailwind CSS classes directly in your React Native components.
-            </Text>
-          </View>
-
-          {/* Example Button */}
-          <View className="items-center">
-            <TouchableOpacity className="bg-primary px-6 py-3 rounded-full active:opacity-80">
-              <Text className="text-background font-semibold">Get Started</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </ScrollView>
-    </ScreenContainer>
-  );
-}
+import { useColors } from "@/hooks/use-colors";
+import { formatDate, routinesFor, today } from "@/lib/ruang-tumbuh-data";
+import { useRuangTumbuh } from "@/lib/ruang-tumbuh-store";
+export default function Home() { const c = useColors(); const { data, ready } = useRuangTumbuh(); if (!ready) return <Loading/>; const date = today(); const routines = routinesFor(data); const done = routines.filter((item) => data.health.routineLogs[date]?.[item.id]).length; const active = data.reflections.filter((item) => item.action).slice(0,2); const last = data.reflections[0]; return <ScreenContainer className="px-5"><ScrollView contentContainerStyle={s.content} showsVerticalScrollIndicator={false}><View style={s.head}><View><Eyebrow>{formatDate(date).toUpperCase()}</Eyebrow><Text style={[s.title,{color:c.foreground}]}>Ruang untuk{`\n`}bertumbuh.</Text></View><View style={s.offline}><MaterialIcons name="cloud-done" size={16} color={c.success}/><Text style={{color:c.success,fontWeight:"800",fontSize:11}}>Offline</Text></View></View><Card style={[s.hero,{backgroundColor:c.primary,borderColor:c.primary}]}><Text style={s.kicker}>SATU LANGKAH PADA SATU WAKTU</Text><Text style={s.heroTitle}>Ubah pengalaman menjadi arah.</Text><Text style={s.heroCopy}>Amati dengan jujur, ambil pelajaran, lalu pilih perubahan kecil yang dapat kamu latih.</Text><Button label="Catat refleksi" onPress={() => router.push("/capture" as never)} icon="edit" quiet/></Card><View style={s.section}><View><Eyebrow>GAMBARAN HARI INI</Eyebrow><Text style={[s.sectionTitle,{color:c.foreground}]}>Perjalananmu</Text></View><Text style={{color:c.muted,fontSize:12,fontWeight:"700"}}>{data.reflections.length} catatan</Text></View><View style={s.stats}><Stat value={`${done}/${routines.length}`} label="rutinitas"/><Stat value={data.health.checkins[date]?.energy ? `${data.health.checkins[date].energy}/5` : "—"} label="energi"/><Stat value={`${active.length}`} label="latihan aktif"/></View><Card><Eyebrow>LATIHAN AKTIF</Eyebrow><Text style={[s.cardTitle,{color:c.foreground}]}>{active.length ? active[0].title : "Belum ada eksperimen aktif"}</Text><Text style={{color:c.muted,fontSize:13,lineHeight:19}}>{active.length ? active[0].action : "Refleksi kecil hari ini dapat menjadi langkah awal."}</Text></Card><Card><Eyebrow>PENGINGAT LEMBUT</Eyebrow><Text style={[s.quote,{color:c.foreground}]}>“Tanggung jawab bukan selalu menyalahkan diri; melainkan mengurus bagian yang memang menjadi bagianmu.”</Text></Card><View style={s.section}><View><Eyebrow>CATATAN TERBARU</Eyebrow><Text style={[s.sectionTitle,{color:c.foreground}]}>Yang sedang dipelajari</Text></View>{last ? <Text onPress={() => router.push(`/reflection/${last.id}` as never)} style={{color:c.primary,fontWeight:"800"}}>Buka</Text> : null}</View><Card><Text style={[s.cardTitle,{color:c.foreground}]}>{last?.title ?? "Belum ada catatan"}</Text><Text style={{color:c.muted,fontSize:13,lineHeight:19}}>{last?.lesson || last?.event || "Tidak perlu sempurna; mulailah dari fakta yang ingin kamu pahami."}</Text></Card></ScrollView></ScreenContainer>; }
+function Stat({value,label}:{value:string;label:string}) { const c=useColors(); return <View style={[s.stat,{backgroundColor:c.surface,borderColor:c.border}]}><Text style={{color:c.foreground,fontSize:21,fontWeight:"800"}}>{value}</Text><Text style={{color:c.muted,fontSize:11,fontWeight:"700"}}>{label}</Text></View> }
+const s=StyleSheet.create({content:{paddingTop:13,paddingBottom:28,gap:15},head:{flexDirection:"row",justifyContent:"space-between",alignItems:"flex-start"},title:{fontSize:32,lineHeight:37,fontWeight:"800",letterSpacing:-.8,marginTop:4},offline:{backgroundColor:"#E8F1E9",paddingHorizontal:9,paddingVertical:7,borderRadius:99,flexDirection:"row",alignItems:"center",gap:5,marginTop:5},hero:{gap:12,padding:20},kicker:{color:"#FFF0E7",fontSize:10,fontWeight:"800",letterSpacing:.8},heroTitle:{color:"#fff",fontSize:28,lineHeight:33,fontWeight:"800"},heroCopy:{color:"#FFF0E7",fontSize:14,lineHeight:20},section:{flexDirection:"row",justifyContent:"space-between",alignItems:"flex-end",marginTop:3},sectionTitle:{fontSize:20,fontWeight:"800",marginTop:3},stats:{flexDirection:"row",gap:8},stat:{flex:1,borderWidth:1,borderRadius:18,padding:12,gap:4},cardTitle:{fontSize:17,fontWeight:"800"},quote:{fontSize:16,lineHeight:24,fontWeight:"600"}});

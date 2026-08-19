@@ -1,40 +1,8 @@
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Tabs } from "expo-router";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-import { HapticTab } from "@/components/haptic-tab";
-import { IconSymbol } from "@/components/ui/icon-symbol";
 import { Platform } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { HapticTab } from "@/components/haptic-tab";
 import { useColors } from "@/hooks/use-colors";
-
-export default function TabLayout() {
-  const colors = useColors();
-  const insets = useSafeAreaInsets();
-  const bottomPadding = Platform.OS === "web" ? 12 : Math.max(insets.bottom, 8);
-  const tabBarHeight = 56 + bottomPadding;
-
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: colors.tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarStyle: {
-          paddingTop: 8,
-          paddingBottom: bottomPadding,
-          height: tabBarHeight,
-          backgroundColor: colors.background,
-          borderTopColor: colors.border,
-          borderTopWidth: 0.5,
-        },
-      }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Home",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-    </Tabs>
-  );
-}
+const Icon = ({ name, color }: { name: React.ComponentProps<typeof MaterialIcons>["name"]; color: string }) => <MaterialIcons name={name} size={23} color={color} />;
+export default function Layout() { const c = useColors(); const i = useSafeAreaInsets(); const bottom = Platform.OS === "web" ? 10 : Math.max(i.bottom, 8); return <Tabs screenOptions={{ headerShown: false, tabBarButton: HapticTab, tabBarActiveTintColor: c.primary, tabBarInactiveTintColor: c.muted, tabBarLabelStyle: { fontWeight: "700", fontSize: 10 }, tabBarStyle: { height: 58 + bottom, paddingTop: 6, paddingBottom: bottom, backgroundColor: c.background, borderTopColor: c.border } }}><Tabs.Screen name="index" options={{ title: "Beranda", tabBarIcon: ({ color }) => <Icon name="home" color={color} /> }}/><Tabs.Screen name="reflections" options={{ title: "Refleksi", tabBarIcon: ({ color }) => <Icon name="menu-book" color={color} /> }}/><Tabs.Screen name="practice" options={{ title: "Latihan", tabBarIcon: ({ color }) => <Icon name="check-circle" color={color} /> }}/><Tabs.Screen name="health" options={{ title: "Sehat", tabBarIcon: ({ color }) => <Icon name="favorite" color={color} /> }}/><Tabs.Screen name="review" options={{ title: "Tinjauan", tabBarIcon: ({ color }) => <Icon name="bar-chart" color={color} /> }}/></Tabs>; }
