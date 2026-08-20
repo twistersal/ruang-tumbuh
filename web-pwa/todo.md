@@ -81,3 +81,9 @@
 - [ ] Verifikasi akses ke repositori `twistersal/ruang-tumbuh`.
 - [ ] Pindahkan branch kode aplikasi dan branch publik ke repositori yang benar.
 - [ ] Arahkan GitHub Pages repositori benar ke branch publik dan verifikasi URL.
+
+## Perbaikan Routing GitHub Pages
+
+- [x] Sesuaikan router agar memahami base path `/ruang-tumbuh/`.
+- [ ] Bangun dan terbitkan ulang branch web serta branch publik.
+- [ ] Verifikasi tampilan aplikasi pada URL GitHub Pages.
