@@ -89,6 +89,7 @@ type BeforeInstallPromptEvent = Event & {
 
 const STORAGE_KEY = "ruang-tumbuh-pwa-v2";
 const ASSET_ORIGIN = "https://ruangtumbuh-7wc6sasx.manus.space/manus-storage";
+const APP_BASE_PATH = import.meta.env.BASE_URL;
 const characterIcon = `${ASSET_ORIGIN}/ruang_tumbuh_icons_512_c29cd8f9.png`;
 const heroImage = `${ASSET_ORIGIN}/ruang-tumbuh-hero_f37dd730.png`;
 const journalTexture = `${ASSET_ORIGIN}/ruang-tumbuh-journal-texture_e33bf21c.png`;
@@ -285,7 +286,7 @@ export default function Home() {
   function goTo(next: Page) {
     setPage(next);
     setMenuOpen(false);
-    window.history.replaceState({}, "", next === "dashboard" ? "/" : `/?view=${next}`);
+    window.history.replaceState({}, "", next === "dashboard" ? APP_BASE_PATH : `${APP_BASE_PATH}?view=${next}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
   function updateData(updater: (previous: AppData) => AppData) { setData(updater); }

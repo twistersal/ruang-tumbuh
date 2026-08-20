@@ -74,16 +74,22 @@
 
 - [x] Audit konfigurasi aset, manifest, dan base path untuk GitHub Pages.
 - [x] Tambahkan alur deployment otomatis dari branch utama.
-- [ ] Aktifkan GitHub Pages dan verifikasi URL publik.
+- [x] Aktifkan GitHub Pages dan verifikasi URL publik.
 
 ## Koreksi Repositori GitHub
 
-- [ ] Verifikasi akses ke repositori `twistersal/ruang-tumbuh`.
-- [ ] Pindahkan branch kode aplikasi dan branch publik ke repositori yang benar.
-- [ ] Arahkan GitHub Pages repositori benar ke branch publik dan verifikasi URL.
+- [x] Verifikasi akses ke repositori `twistersal/ruang-tumbuh`.
+- [x] Pindahkan branch kode aplikasi dan branch publik ke repositori yang benar.
+- [x] Arahkan GitHub Pages repositori benar ke branch publik dan verifikasi URL.
 
 ## Perbaikan Routing GitHub Pages
 
 - [x] Sesuaikan router agar memahami base path `/ruang-tumbuh/`.
-- [ ] Bangun dan terbitkan ulang branch web serta branch publik.
-- [ ] Verifikasi tampilan aplikasi pada URL GitHub Pages.
+- [x] Bangun dan terbitkan ulang branch web serta branch publik.
+- [x] Verifikasi tampilan aplikasi pada URL GitHub Pages.
+
+## Perbaikan Navigasi Internal GitHub Pages
+
+- [x] Audit pembentukan URL saat pengguna berpindah halaman.
+- [x] Gunakan base path GitHub Pages pada seluruh pembaruan URL internal.
+- [ ] Terbitkan ulang dan verifikasi halaman Catat, Refleksi, Jadwal, dan Kesehatan.
